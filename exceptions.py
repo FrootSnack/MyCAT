@@ -7,8 +7,5 @@ class ConfigInputError(Exception):
 class ConfigOutputError(Exception):
     pass
 
-class NewTranslationDictError(Exception):
-    pass
-
-class NewConfigDictError(Exception):
+class DictConversionError(Exception):
     pass

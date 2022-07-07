@@ -4,7 +4,7 @@ from typing import Type
 from urllib.parse import ParseResultBytes
 
 from click import File
-from exceptions import NoTranslationConfigError, ConfigInputError, ConfigOutputError, NewTranslationDictError, NewConfigDictError
+from exceptions import DictConversionError, NoTranslationConfigError, ConfigInputError, ConfigOutputError
 from fpdf import FPDF
 from os.path import exists
 
@@ -19,6 +19,16 @@ class Color:
             self.B = B
         except AssertionError:
             raise AssertionError("All initialization values must be of the correct type.")
+
+    def to_dict(self) -> dict:
+        try:
+            out_dict: dict = {}
+            out_dict['R'] = self.R
+            out_dict['G'] = self.G
+            out_dict['B'] = self.B
+            return out_dict
+        except Exception:
+            DictConversionError("Color")
 
 class Translation:
     def __init__(self, xPos: int, yPos: int, textColor: Color,\
@@ -38,10 +48,25 @@ class Translation:
             self.translatedText = translatedText
         except AssertionError:
             raise AssertionError("All initialization values must be of the correct type.")
+    
+    def to_dict(self) -> dict:
+        try:
+            out_dict: dict = {}
+            out_dict['xPos'] = self.xPos
+            out_dict['yPos'] = self.yPos
+            out_dict['textColor'] = self.textColor.to_dict()
+            out_dict['backgroundColor'] = self.backgroundColor.to_dict()
+            out_dict['originalText'] = self.originalText
+            out_dict['translatedText'] = self.translatedText
+        except Exception:
+            DictConversionError("Translation")
 
 class TranslationConfig:
     def __init__(self, originalFileName: str, outputFileName: str) -> None:
         try:
+            if 0 in [len(originalFileName), len(outputFileName)] \
+                or '.' not in originalFileName or '.' not in outputFileName:
+                raise FileNotFoundError("Improper file naming convention!")
             assert type(originalFileName) is str
             self.originalFileName = originalFileName
             assert type(outputFileName) is str
@@ -57,58 +82,46 @@ class TranslationConfig:
         except AssertionError:
             raise AssertionError("Provided object is not a Translation.")
 
+    def to_dict(self) -> dict:
+        try:
+            out_dict: dict = {}
+            out_dict['originalFileName'] = self.originalFileName
+            out_dict['outputFileName'] = self.outputFileName
+            out_dict['translations'] = [t.to_dict() for t in self.translations]
+            return out_dict
+        except Exception:
+            DictConversionError("TranslationConfig")
 
-def import_tr_as_dict(filepath: str) -> dict:
+
+def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:
     if not exists(filepath):
         raise NoTranslationConfigError
+    if '.' in filepath and filepath.split('.')[1].lower() != 'tr':
+        raise FileNotFoundError("Given filepath does not have the .tr extension.")
     try:
         with open(filepath, 'r') as f:
-            out_dict: dict = json.load(f)
-        return out_dict
+            tr_dict: dict = json.load(f)
+        out_config: TranslationConfig = TranslationConfig(tr_dict['originalFileName'], tr_dict['outputFileName'])
+        out_config.translations = tr_dict['translations']
+        return out_config
     except Exception:
         raise ConfigInputError
 
 
-def output_dict_to_tr(filepath: str, translation_dict: dict) -> None:
+def output_translationconfig_to_tr(filepath: str, translation_config: TranslationConfig) -> None:
     if not exists(filepath):
         f = open(filepath, 'w+')
         f.close()
     try:
+        translation_dict: dict = translation_config.to_dict()
         with open(filepath, 'w') as f:
             json.dump(translation_dict, f, indent=4)
     except Exception:
         raise ConfigOutputError
 
 
-def create_new_config_dict(originalFileName: str, outputFileName: str) -> dict:
-    try:
-        assert type(originalFileName) is str
-        assert type(outputFileName) is str
-        
-        if 0 in [len(originalFileName), len(outputFileName)] or '.' not in originalFileName or \
-            '.' not in outputFileName or outputFileName.split('.')[1].lower() != 'tr':
-            raise FileNotFoundError
-
-        return { 'originalFileName': originalFileName, 'outputFileName': outputFileName, 'translations': [] }
-    except AssertionError:
-        raise AssertionError("Input variables should be of the appropriate type.")
-    except FileNotFoundError:
-        raise FileNotFoundError("Original and output files must have the appropriate naming convention!")
-    except Exception:
-        raise NewConfigDictError
-
-
-def create_new_translation_dict() -> dict:
-    try:
-        return {}
-    except AssertionError:
-        raise AssertionError("Input variables should be of the appropriate type.")
-    except Exception:
-        raise NewTranslationDictError
-
-
 def main() -> None:
-    create_new_config_dict
+    pass
 
 if __name__ == '__main__':
     main()
