@@ -1,9 +1,4 @@
-from fnmatch import translate
 import json
-from typing import Type
-from urllib.parse import ParseResultBytes
-
-from click import File
 from exceptions import DictConversionError, NoTranslationConfigError, ConfigInputError, ConfigOutputError
 from fpdf import FPDF
 from os.path import exists
@@ -18,7 +13,7 @@ class Color:
             assert type(B) is int
             self.B = B
         except AssertionError:
-            raise AssertionError("All initialization values must be of the correct type.")
+            raise TypeError("All initialization values must be of the correct type.")
 
     def to_dict(self) -> dict:
         try:
@@ -47,7 +42,7 @@ class Translation:
             assert type(translatedText) is str
             self.translatedText = translatedText
         except AssertionError:
-            raise AssertionError("All initialization values must be of the correct type.")
+            raise TypeError("All initialization values must be of the correct type.")
     
     def to_dict(self) -> dict:
         try:
@@ -58,6 +53,7 @@ class Translation:
             out_dict['backgroundColor'] = self.backgroundColor.to_dict()
             out_dict['originalText'] = self.originalText
             out_dict['translatedText'] = self.translatedText
+            return out_dict
         except Exception:
             DictConversionError("Translation")
 
@@ -66,14 +62,14 @@ class TranslationConfig:
         try:
             if 0 in [len(originalFileName), len(outputFileName)] \
                 or '.' not in originalFileName or '.' not in outputFileName:
-                raise FileNotFoundError("Improper file naming convention!")
+                raise ValueError("Improper file naming convention!")
             assert type(originalFileName) is str
             self.originalFileName = originalFileName
             assert type(outputFileName) is str
             self.outputFileName = outputFileName
             self.translations = []
         except AssertionError:
-            raise AssertionError("All initialization values must be of the correct type.")
+            raise TypeError("All initialization values must be of the correct type.")
     
     def add_translation(self, translation: Translation) -> None:
         try:
@@ -88,6 +84,7 @@ class TranslationConfig:
             out_dict['originalFileName'] = self.originalFileName
             out_dict['outputFileName'] = self.outputFileName
             out_dict['translations'] = [t.to_dict() for t in self.translations]
+            
             return out_dict
         except Exception:
             DictConversionError("TranslationConfig")
@@ -97,12 +94,16 @@ def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:
     if not exists(filepath):
         raise NoTranslationConfigError
     if '.' in filepath and filepath.split('.')[1].lower() != 'tr':
-        raise FileNotFoundError("Given filepath does not have the .tr extension.")
+        raise ValueError("Given filepath does not have the .tr extension.")
     try:
         with open(filepath, 'r') as f:
             tr_dict: dict = json.load(f)
         out_config: TranslationConfig = TranslationConfig(tr_dict['originalFileName'], tr_dict['outputFileName'])
-        out_config.translations = tr_dict['translations']
+        for t in tr_dict['translations']:
+            out_config.add_translation(Translation(t['xPos'], t['yPos'],\
+                    Color(t['textColor']['R'], t['textColor']['G'], t['textColor']['B']),\
+                    Color(t['backgroundColor']['R'], t['backgroundColor']['G'], t['backgroundColor']['B']),\
+                        t['originalText'], t['translatedText']))
         return out_config
     except Exception:
         raise ConfigInputError
@@ -121,7 +122,9 @@ def output_translationconfig_to_tr(filepath: str, translation_config: Translatio
 
 
 def main() -> None:
-    pass
+    test_cfg: TranslationConfig = import_tr_to_translationconfig('local/example.tr')
+    output_translationconfig_to_tr('local/example_2.tr', test_cfg)
+
 
 if __name__ == '__main__':
     main()
