@@ -1,0 +1,44 @@
+{
+    "originalFileName": "test.pdf",
+    "outputFileName": "new_test.pdf",
+    "translations": [
+        {
+            "xPos": 69,
+            "yPos": 0,
+            "textColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "backgroundColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "fontSize": 12,
+            "text": {
+                "original": "My name is John.",
+                "translated": "Me llamo John."
+            }
+        },
+        {
+            "xPos": 90,
+            "yPos": 90,
+            "textColor": {
+                "R": 0,
+                "G": 0,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 255,
+                "B": 0
+            },
+            "fontSize": 20,
+            "text": {
+                "original": "Hello!",
+                "translated": "\u00a1Hola!"
+            }
+        }
+    ]
+}
