@@ -110,7 +110,7 @@ class TranslationConfig:
             DictConversionError("TranslationConfig")
     
     def save(self) -> None:
-        output_translationconfig_to_tr(f"{self.outputFileName.split('.')[0]}.tr")
+        output_translationconfig_to_tr(f"{self.outputFileName.split('.')[0]}.tr", self)
 
 
 def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:

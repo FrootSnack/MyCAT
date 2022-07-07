@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import main
-from os.path import exists
+from os.path import abspath, exists
 from tkinter import Toplevel, ttk
 
 class App:
@@ -57,12 +57,19 @@ class App:
 
     def btn_start_command(self) -> None:
         try:
-            pdf_path: str = self.ent_pdf.get()
-            tr_path: str = self.ent_translation_config.get()
+            pdf_path: str = abspath(self.ent_pdf.get())
+            tr_path: str = abspath(self.ent_translation_config.get())
             cfg: main.TranslationConfig = None
             if not exists(pdf_path):
+                print(pdf_path)
                 raise FileNotFoundError("The given PDF path does not exist!")
-            if not exists(tr_path):
+            # This and the elif below are bad code; fix the logic.
+            # Actually, this whole method needs restructuring.
+            if tr_path == '' and exists(f"{pdf_path.split('.')[0]}.tr"):
+                tr_path = f"{pdf_path.split('.')[0]}.tr"
+                f.open(tr_path, 'w+')
+                f.close()
+            elif not exists(tr_path):
                 output_path: str = self.open_prompt("Please enter your desired output PDF path:")
                 if exists(output_path):
                     raise FileExistsError("The given PDF path already exists!")
@@ -89,8 +96,6 @@ class App:
         var = tk.IntVar()
         popup.geometry('%dx%d+%d+%d' % (400, 100, (self.screenwidth - 400) / 2, (self.screenheight - 100) / 2))
         popup.title("Input")
-
-        
         
         btn_enter=ttk.Button(popup, text="Enter", command=lambda: var.set(1))
         btn_enter.pack(side='bottom', expand=True)
