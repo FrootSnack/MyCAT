@@ -10,28 +10,52 @@ from os.path import exists
 
 class Color:
     def __init__(self, R: int, G: int, B: int) -> None:
-        self.R = R
-        self.G = G
-        self.B = B
+        try:
+            assert type(R) is int
+            self.R = R
+            assert type(G) is int
+            self.G = G
+            assert type(B) is int
+            self.B = B
+        except AssertionError:
+            raise AssertionError("All initialization values must be of the correct type.")
 
 class Translation:
     def __init__(self, xPos: int, yPos: int, textColor: Color,\
          backgroundColor: Color, originalText: str, translatedText: str) -> None:
-        self.xPos = xPos
-        self.yPos = yPos
-        self.textColor = textColor
-        self.backgroundColor = backgroundColor
-        self.originalText = originalText
-        self.translatedText = translatedText
+        try:
+            assert type(xPos) is int
+            self.xPos = xPos
+            assert type(yPos) is int
+            self.yPos = yPos
+            assert type(textColor) is Color
+            self.textColor = textColor
+            assert type(backgroundColor) is Color
+            self.backgroundColor = backgroundColor
+            assert type(originalText) is str
+            self.originalText = originalText
+            assert type(translatedText) is str
+            self.translatedText = translatedText
+        except AssertionError:
+            raise AssertionError("All initialization values must be of the correct type.")
 
 class TranslationConfig:
     def __init__(self, originalFileName: str, outputFileName: str) -> None:
-        self.originalFileName = originalFileName
-        self.outputFileName = outputFileName
-        self.translations = []
+        try:
+            assert type(originalFileName) is str
+            self.originalFileName = originalFileName
+            assert type(outputFileName) is str
+            self.outputFileName = outputFileName
+            self.translations = []
+        except AssertionError:
+            raise AssertionError("All initialization values must be of the correct type.")
     
-    def add_translation(self, translation: Translation):
-        self.translations.append(translation)
+    def add_translation(self, translation: Translation) -> None:
+        try:
+            assert type(translation) is Translation
+            self.translations.append(translation)
+        except AssertionError:
+            raise AssertionError("Provided object is not a Translation.")
 
 
 def import_tr_as_dict(filepath: str) -> dict:
