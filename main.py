@@ -1,7 +1,24 @@
 import json
+import tkinter as tk
+from sqlalchemy import true
 from exceptions import DictConversionError, NoTranslationConfigError, ConfigInputError, ConfigOutputError
 from fpdf import FPDF
-from os.path import exists
+from os.path import abspath, exists
+from tkinter import ttk
+
+
+class Point:
+    def __init__(self, x: int, y: int) -> None:
+        try:
+            assert type(x) is int
+            self.x = x
+            assert type(y) is int
+            self.y = y
+        except AssertionError:
+            raise TypeError("All initialization values must be of the correct type.")
+    
+    def __eq__(self, __o: object) -> bool:
+        return self.x == __o.x and self.y == __o.y
 
 class Color:
     def __init__(self, R: int, G: int, B: int) -> None:
@@ -14,6 +31,9 @@ class Color:
             self.B = B
         except AssertionError:
             raise TypeError("All initialization values must be of the correct type.")
+    
+    def __eq__(self, __o: object) -> bool:
+        return self.R == __o.R and self.G == __o.G and self.B == __o.B
 
     def to_dict(self) -> dict:
         try:
@@ -64,9 +84,9 @@ class TranslationConfig:
                 or '.' not in originalFileName or '.' not in outputFileName:
                 raise ValueError("Improper file naming convention!")
             assert type(originalFileName) is str
-            self.originalFileName = originalFileName
+            self.originalFileName = abspath(originalFileName)
             assert type(outputFileName) is str
-            self.outputFileName = outputFileName
+            self.outputFileName = abspath(outputFileName)
             self.translations = []
         except AssertionError:
             raise TypeError("All initialization values must be of the correct type.")
@@ -88,6 +108,9 @@ class TranslationConfig:
             return out_dict
         except Exception:
             DictConversionError("TranslationConfig")
+    
+    def save(self) -> None:
+        output_translationconfig_to_tr(f"{self.outputFileName.split('.')[0]}.tr")
 
 
 def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:
@@ -122,8 +145,18 @@ def output_translationconfig_to_tr(filepath: str, translation_config: Translatio
 
 
 def main() -> None:
-    test_cfg: TranslationConfig = import_tr_to_translationconfig('local/example.tr')
-    output_translationconfig_to_tr('local/example_2.tr', test_cfg)
+    root = tk.Tk()
+    root.title("SimpleCAT")
+    root.geometry(f'1200x700+0+0')
+    root.resizable(False, False)
+    btn_open = ttk.Button(
+        root,
+        text='Open',
+        command=lambda: root.quit()
+    )
+    btn_open.pack()
+
+    root.mainloop()
 
 
 if __name__ == '__main__':
