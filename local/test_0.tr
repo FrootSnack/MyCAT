@@ -1,0 +1,78 @@
+{
+    "originalFileName": "/Users/nolanwelch/Documents/CAT/local/test.pdf",
+    "outputFileName": "/Users/nolanwelch/Documents/CAT/local/test_out.pdf",
+    "translations": [
+        {
+            "xPos": 388,
+            "yPos": 347,
+            "width": 1278,
+            "height": 73,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 387,
+            "yPos": 416,
+            "width": 1265,
+            "height": 62,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 386,
+            "yPos": 481,
+            "width": 627,
+            "height": 163,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 386,
+            "yPos": 646,
+            "width": 626,
+            "height": 87,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        }
+    ]
+}

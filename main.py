@@ -22,6 +22,10 @@ class Point:
     def to_dict(self) -> dict:
         return {'x': self.x, 'y': self.y}
 
+    def to_tuple(self) -> tuple[int, int]:
+        """Returns the Point object as a tuple of the form (x, y)"""
+        return (self.x, self.y)
+
 class Color:
     def __init__(self, R: int, G: int, B: int) -> None:
         try:

@@ -122,7 +122,7 @@ class App:
             self.open_popup(repr(e))
 
     def pdf_as_image_list(self, config: main.TranslationConfig) -> list:
-        """Convert the PDF found in the given config to a PIL Image list."""
+        """Convert the PDF found in the given config to a PIL Image list"""
         try:
             return convert_from_path(config.originalFileName)
         except Exception as e:
