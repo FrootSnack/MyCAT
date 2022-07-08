@@ -46,13 +46,17 @@ class Color:
             DictConversionError("Color")
 
 class Translation:
-    def __init__(self, xPos: int, yPos: int, textColor: Color,\
+    def __init__(self, xPos: int, yPos: int, width: int, height: int, textColor: Color,\
          backgroundColor: Color, originalText: str, translatedText: str) -> None:
         try:
             assert type(xPos) is int
             self.xPos = xPos
             assert type(yPos) is int
             self.yPos = yPos
+            assert type(width) is int
+            self.width = width
+            assert type(height) is int
+            self.height = height
             assert type(textColor) is Color
             self.textColor = textColor
             assert type(backgroundColor) is Color
@@ -69,6 +73,8 @@ class Translation:
             out_dict: dict = {}
             out_dict['xPos'] = self.xPos
             out_dict['yPos'] = self.yPos
+            out_dict['width'] = self.width
+            out_dict['height'] = self.height
             out_dict['textColor'] = self.textColor.to_dict()
             out_dict['backgroundColor'] = self.backgroundColor.to_dict()
             out_dict['originalText'] = self.originalText
@@ -118,18 +124,18 @@ def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:
         raise NoTranslationConfigError
     if '.' in filepath and filepath.split('.')[1].lower() != 'tr':
         raise ValueError("Given filepath does not have the .tr extension.")
-    try:
-        with open(filepath, 'r') as f:
-            tr_dict: dict = json.load(f)
-        out_config: TranslationConfig = TranslationConfig(tr_dict['originalFileName'], tr_dict['outputFileName'])
-        for t in tr_dict['translations']:
-            out_config.add_translation(Translation(t['xPos'], t['yPos'],\
-                    Color(t['textColor']['R'], t['textColor']['G'], t['textColor']['B']),\
-                    Color(t['backgroundColor']['R'], t['backgroundColor']['G'], t['backgroundColor']['B']),\
-                        t['originalText'], t['translatedText']))
-        return out_config
-    except Exception:
-        raise ConfigInputError
+    # try:
+    with open(filepath, 'r') as f:
+        tr_dict: dict = json.load(f)
+    out_config: TranslationConfig = TranslationConfig(tr_dict['originalFileName'], tr_dict['outputFileName'])
+    for t in tr_dict['translations']:
+        out_config.add_translation(Translation(t['xPos'], t['yPos'], t['width'], t['height'],\
+                Color(t['textColor']['R'], t['textColor']['G'], t['textColor']['B']),\
+                Color(t['backgroundColor']['R'], t['backgroundColor']['G'], t['backgroundColor']['B']),\
+                    t['originalText'], t['translatedText']))
+    return out_config
+    # except Exception:
+    #     raise ConfigInputError
 
 
 def output_translationconfig_to_tr(filepath: str, translation_config: TranslationConfig) -> None:

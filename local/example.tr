@@ -3,8 +3,10 @@
     "outputFileName": "new_test.pdf",
     "translations": [
         {
-            "xPos": 69,
+            "xPos": 0,
             "yPos": 0,
+            "width": 40,
+            "height": 120,
             "textColor": {
                 "R": 0,
                 "G": 0,
@@ -22,6 +24,8 @@
         {
             "xPos": 90,
             "yPos": 90,
+            "width": 40,
+            "height": 120,
             "textColor": {
                 "R": 0,
                 "G": 0,
