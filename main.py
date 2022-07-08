@@ -1,6 +1,5 @@
 import json
 import tkinter as tk
-from sqlalchemy import true
 from exceptions import DictConversionError, NoTranslationConfigError, ConfigInputError, ConfigOutputError
 from fpdf import FPDF
 from os.path import abspath, exists
@@ -19,6 +18,9 @@ class Point:
     
     def __eq__(self, __o: object) -> bool:
         return self.x == __o.x and self.y == __o.y
+
+    def to_dict(self) -> dict:
+        return {'x': self.x, 'y': self.y}
 
 class Color:
     def __init__(self, R: int, G: int, B: int) -> None:

@@ -1,4 +1,4 @@
-import tkinter
+import cv2
 import main
 import os
 import tkinter as tk

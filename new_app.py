@@ -1,35 +1,46 @@
-from tkinter import *
-from tkinter.filedialog import askopenfilename
-from PIL import Image, ImageTk
+import cv2
+import numpy as np
+import tempfile
+from main import Point
+from os.path import exists
+from pdf2image import convert_from_path
+from tkinter import filedialog as fd
+  
+def click_event(event, x, y, flags, params) -> Point:
+    if event in [cv2.EVENT_LBUTTONDOWN, cv2.EVENT_RBUTTONDOWN]:
+        print(Point(x, y).to_dict())
+        return Point(x, y)
+    return None
+ 
+ 
+# driver function
+if __name__=="__main__":
+    pdf_file_name = ''
+    while pdf_file_name == '' or not exists(pdf_file_name) or pdf_file_name.split('.')[1].lower() != 'pdf':
+        pdf_file_name = fd.askopenfilename()
+    
+    image_list: list = convert_from_path(pdf_file_name)
 
-if __name__ == "__main__":
-    root = Tk()
+    with tempfile.TemporaryDirectory() as td:
+        print(td)
+    exit()
+    for image in image_list:
+        cv2_img = np.array(image.convert('RGB'))
+        cv2_img = cv2_img[:, :, ::-1].copy() 
+        
 
-    #setting up a tkinter canvas with scrollbars
-    frame = Frame(root, bd=2, relief=SUNKEN)
-    frame.grid_rowconfigure(0, weight=1)
-    frame.grid_columnconfigure(0, weight=1)
-    xscroll = Scrollbar(frame, orient=HORIZONTAL)
-    xscroll.grid(row=1, column=0, sticky=E+W)
-    yscroll = Scrollbar(frame)
-    yscroll.grid(row=0, column=1, sticky=N+S)
-    canvas = Canvas(frame, bd=0, xscrollcommand=xscroll.set, yscrollcommand=yscroll.set)
-    canvas.grid(row=0, column=0, sticky=N+S+E+W)
-    xscroll.config(command=canvas.xview)
-    yscroll.config(command=canvas.yview)
-    frame.pack(fill=BOTH,expand=1)
-
-    #adding the image
-    File = askopenfilename(parent=root, initialdir="C:/",title='Choose an image.')
-    img = ImageTk.PhotoImage(Image.open(File))
-    canvas.create_image(0,0,image=img,anchor="nw")
-    canvas.config(scrollregion=canvas.bbox(ALL))
-
-    #function to be called when mouse is clicked
-    def printcoords(event):
-        #outputting x and y coords to console
-        print (event.x,event.y)
-    #mouseclick event
-    canvas.bind("<Button 1>",printcoords)
-
-    root.mainloop()
+    # reading the image
+    img = cv2.imread('test.jpg', 1)
+ 
+    # displaying the image
+    cv2.imshow('image', img)
+ 
+    # setting mouse handler for the image
+    # and calling the click_event() function
+    cv2.setMouseCallback('image', click_event)
+ 
+    # wait for a key to be pressed to exit
+    cv2.waitKey(0)
+ 
+    # close the window
+    cv2.destroyAllWindows()
