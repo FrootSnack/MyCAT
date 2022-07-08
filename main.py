@@ -48,8 +48,9 @@ class Color:
             DictConversionError("Color")
 
 class Translation:
-    def __init__(self, xPos: int, yPos: int, width: int, height: int, textColor: Color,\
-         backgroundColor: Color, originalText: str, translatedText: str) -> None:
+    def __init__(self, xPos: int, yPos: int, width: int, height: int,\
+         textColor: Color = Color(255, 255, 255), backgroundColor: Color = Color(0, 0, 0),\
+             originalText: str = '', translatedText: str = '') -> None:
         try:
             assert type(xPos) is int
             self.xPos = xPos
