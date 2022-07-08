@@ -253,6 +253,258 @@
             },
             "originalText": "",
             "translatedText": ""
+        },
+        {
+            "xPos": 384,
+            "yPos": 90,
+            "width": 750,
+            "height": 128,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 383,
+            "yPos": 215,
+            "width": 748,
+            "height": 74,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 385,
+            "yPos": 287,
+            "width": 638,
+            "height": 155,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 382,
+            "yPos": 439,
+            "width": 639,
+            "height": 84,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 385,
+            "yPos": 522,
+            "width": 636,
+            "height": 111,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 419,
+            "yPos": 647,
+            "width": 94,
+            "height": 42,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 419,
+            "yPos": 686,
+            "width": 91,
+            "height": 50,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 427,
+            "yPos": 730,
+            "width": 96,
+            "height": 45,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 715,
+            "yPos": 651,
+            "width": 108,
+            "height": 34,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 703,
+            "yPos": 686,
+            "width": 164,
+            "height": 37,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 706,
+            "yPos": 729,
+            "width": 166,
+            "height": 38,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 353,
+            "yPos": 772,
+            "width": 663,
+            "height": 196,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 363,
+            "yPos": 959,
+            "width": 348,
+            "height": 42,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
+        },
+        {
+            "xPos": 352,
+            "yPos": 998,
+            "width": 600,
+            "height": 127,
+            "textColor": {
+                "R": 255,
+                "G": 255,
+                "B": 255
+            },
+            "backgroundColor": {
+                "R": 0,
+                "G": 0,
+                "B": 0
+            },
+            "originalText": "",
+            "translatedText": ""
         }
     ]
 }

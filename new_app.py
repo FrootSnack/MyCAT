@@ -6,6 +6,11 @@ import tempfile
 from main import Point, Translation, TranslationConfig, output_translationconfig_to_tr
 from pdf2image import convert_from_path
 from tkinter import filedialog as fd
+
+# TODO: Add post-processing for .tr files (may need to be a separate program). Should scan image to find most common (background) and second most common (foreground) colors
+# TODO: Add post-processing for .tr files to grab text with OCR and place it into the originalText field
+# TODO: Create interface (may need to be a separate program) where translator may view OCR text and input their translation.
+# TODO: Add finalization step (may need to be a separate program) that blanks the given translation area with the background color and places the translation text in the foreground color.
   
 translation_list: list = []
 start_point: Point = None
