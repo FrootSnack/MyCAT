@@ -1,5 +1,5 @@
 import json
-from exceptions import ConfigOutputError, DictConversionError, NoTranslationConfigError
+from exceptions import ConfigInputError, ConfigOutputError, DictConversionError, NoTranslationConfigError
 from os.path import abspath, exists
 
 
@@ -85,7 +85,7 @@ class Translation:
             out_dict['translatedText'] = self.translatedText
             return out_dict
         except Exception:
-            DictConversionError("Translation")
+            raise DictConversionError("Translation")
 
 class TranslationConfig:
     def __init__(self, originalFileName: str, outputFileName: str) -> None:
@@ -101,23 +101,32 @@ class TranslationConfig:
         except AssertionError:
             raise TypeError("All initialization values must be of the correct type.")
     
-    def add_translation(self, translation: Translation) -> None:
+    def add_translation(self, translation: Translation, page_ind: int) -> None:
         try:
             assert type(translation) is Translation
-            self.translations.append(translation)
+            assert type(page_ind) is int
+            if page_ind > (len(self.translations)-1):
+                self.translations.append([translation])
+            else:
+                self.translations[page_ind].append(translation)
         except AssertionError:
-            raise AssertionError("Provided object is not a Translation.")
+            raise AssertionError("All passed values must be of the correct type.")
 
     def to_dict(self) -> dict:
         try:
             out_dict: dict = {}
             out_dict['originalFileName'] = self.originalFileName
             out_dict['outputFileName'] = self.outputFileName
-            out_dict['translations'] = [t.to_dict() for t in self.translations]
-            
+            dict_translations: list = []
+            for page in self.translations:
+                dict_translations.append([t.to_dict() for t in page])
+            out_dict['translations'] = dict_translations
             return out_dict
         except Exception:
             DictConversionError("TranslationConfig")
+
+    def save(self) -> None:
+        output_translationconfig_to_tr(f"{self.originalFileName.split('.')[0]}.tr", self)
 
 
 def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:
@@ -125,18 +134,19 @@ def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:
         raise NoTranslationConfigError
     if '.' in filepath and filepath.split('.')[1].lower() != 'tr':
         raise ValueError("Given filepath does not have the .tr extension.")
-    # try:
-    with open(filepath, 'r') as f:
-        tr_dict: dict = json.load(f)
-    out_config: TranslationConfig = TranslationConfig(tr_dict['originalFileName'], tr_dict['outputFileName'])
-    for t in tr_dict['translations']:
-        out_config.add_translation(Translation(t['xPos'], t['yPos'], t['width'], t['height'],\
-                Color(t['textColor']['R'], t['textColor']['G'], t['textColor']['B']),\
-                Color(t['backgroundColor']['R'], t['backgroundColor']['G'], t['backgroundColor']['B']),\
-                    t['originalText'], t['translatedText']))
-    return out_config
-    # except Exception:
-    #     raise ConfigInputError
+    try:
+        with open(filepath, 'r') as f:
+            tr_dict: dict = json.load(f)
+        out_config: TranslationConfig = TranslationConfig(tr_dict['originalFileName'], tr_dict['outputFileName'])
+        for page_ind, page in enumerate(tr_dict['translations']):
+            for tr in page:
+                out_config.add_translation(Translation(tr['xPos'], tr['yPos'], tr['width'], tr['height'],\
+                    Color(tr['textColor']['R'], tr['textColor']['G'], tr['textColor']['B']),\
+                    Color(tr['backgroundColor']['R'], tr['backgroundColor']['G'], tr['backgroundColor']['B']),\
+                        tr['originalText'], tr['translatedText']), page_ind)
+        return out_config
+    except Exception:
+        raise ConfigInputError
 
 
 def output_translationconfig_to_tr(filepath: str, translation_config: TranslationConfig) -> None:

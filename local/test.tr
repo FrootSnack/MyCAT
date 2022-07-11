@@ -1,0 +1,26 @@
+{
+    "originalFileName": "/Users/nolanwelch/Documents/CAT/local/test.pdf",
+    "outputFileName": "/Users/nolanwelch/Documents/CAT/local/test_out.pdf",
+    "translations": [
+        [
+            {
+                "xPos": 383,
+                "yPos": 479,
+                "width": 605,
+                "height": 166,
+                "textColor": {
+                    "R": 255,
+                    "G": 255,
+                    "B": 255
+                },
+                "backgroundColor": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 0
+                },
+                "originalText": "",
+                "translatedText": ""
+            }
+        ]
+    ]
+}
