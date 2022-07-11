@@ -32,11 +32,18 @@ class Color:
             self.G = G
             assert type(B) is int
             self.B = B
+            if R == G == B:
+                self.R = 255
+                self.G = 255
+                self.B = 255
         except AssertionError:
             raise TypeError("All initialization values must be of the correct type.")
     
     def __eq__(self, __o: object) -> bool:
         return self.R == __o.R and self.G == __o.G and self.B == __o.B
+
+    def __hash__(self) -> int:
+        return hash((self.R, self.G, self.B))
 
     def to_dict(self) -> dict:
         try:

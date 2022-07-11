@@ -83,7 +83,3 @@ def run() -> str:
     shutil.rmtree(temp_dir)
     cv2.destroyAllWindows()
     return f"{tr_config.originalFileName.split('.')[0]}.tr"
-
-
-if __name__=="__main__":
-    run()
