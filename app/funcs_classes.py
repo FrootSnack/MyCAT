@@ -54,6 +54,9 @@ class Color:
             return out_dict
         except Exception:
             DictConversionError("Color")
+    
+    def to_tuple(self) -> tuple:
+        return (self.R, self.G, self.B)
 
 class Translation:
     def __init__(self, xPos: int, yPos: int, width: int, height: int,\

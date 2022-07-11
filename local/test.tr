@@ -4,32 +4,14 @@
     "translations": [
         [
             {
-                "xPos": 393,
-                "yPos": 233,
-                "width": 736,
-                "height": 65,
+                "xPos": 361,
+                "yPos": 337,
+                "width": 1288,
+                "height": 78,
                 "textColor": {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                },
-                "backgroundColor": {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                },
-                "originalText": "INFORMATION FOR KEEPING HEALTHY",
-                "translatedText": ""
-            },
-            {
-                "xPos": 389,
-                "yPos": 349,
-                "width": 1227,
-                "height": 69,
-                "textColor": {
-                    "R": 203,
-                    "G": 241,
-                    "B": 255
+                    "R": 45,
+                    "G": 108,
+                    "B": 159
                 },
                 "backgroundColor": {
                     "R": 255,
@@ -37,43 +19,7 @@
                     "B": 255
                 },
                 "originalText": "Step Into Spring: Do THIS for 15 Minutes After Dinner",
-                "translatedText": ""
-            },
-            {
-                "xPos": 393,
-                "yPos": 415,
-                "width": 511,
-                "height": 71,
-                "textColor": {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                },
-                "backgroundColor": {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                },
-                "originalText": "Walk daily to improve your healtf",
-                "translatedText": ""
-            },
-            {
-                "xPos": 391,
-                "yPos": 479,
-                "width": 565,
-                "height": 164,
-                "textColor": {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                },
-                "backgroundColor": {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                },
-                "originalText": "When Colorado resident Meghan Rabbit started feeling like her wine-and-Netflix habit after dinner was taking a toll, she decided to make a change.",
-                "translatedText": ""
+                "translatedText": "Haga ESTO"
             }
         ]
     ]

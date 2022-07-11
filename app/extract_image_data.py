@@ -7,8 +7,6 @@ import tempfile
 from collections import Counter
 from funcs_classes import import_tr_to_translationconfig, TranslationConfig, Translation, Color
 from pdf2image import convert_from_path
-from PIL import Image
-from tkinter import filedialog as fd
 
 tessdata_dir_config = r'--tessdata-dir "/Users/nolanwelch/homebrew/Cellar/tesseract/5.2.0/share/tessdata"'
 text_ratio: float = 0.1  # Estimation of how much of a selection will be text; used to find non-background pixels
