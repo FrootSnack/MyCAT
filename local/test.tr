@@ -4,22 +4,58 @@
     "translations": [
         [
             {
-                "xPos": 361,
-                "yPos": 337,
-                "width": 1288,
-                "height": 78,
+                "xPos": 393,
+                "yPos": 336,
+                "width": 247,
+                "height": 130,
                 "textColor": {
-                    "R": 45,
-                    "G": 108,
-                    "B": 159
+                    "R": 255,
+                    "G": 255,
+                    "B": 255
                 },
                 "backgroundColor": {
                     "R": 255,
                     "G": 255,
                     "B": 255
                 },
-                "originalText": "Step Into Spring: Do THIS for 15 Minutes After Dinner",
-                "translatedText": "Haga ESTO"
+                "originalText": "",
+                "translatedText": ""
+            },
+            {
+                "xPos": 400,
+                "yPos": 420,
+                "width": 526,
+                "height": 47,
+                "textColor": {
+                    "R": 255,
+                    "G": 255,
+                    "B": 255
+                },
+                "backgroundColor": {
+                    "R": 255,
+                    "G": 255,
+                    "B": 255
+                },
+                "originalText": "",
+                "translatedText": ""
+            },
+            {
+                "xPos": 1053,
+                "yPos": 487,
+                "width": 197,
+                "height": 48,
+                "textColor": {
+                    "R": 255,
+                    "G": 255,
+                    "B": 255
+                },
+                "backgroundColor": {
+                    "R": 255,
+                    "G": 255,
+                    "B": 255
+                },
+                "originalText": "",
+                "translatedText": ""
             }
         ]
     ]

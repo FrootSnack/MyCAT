@@ -9,13 +9,11 @@ from funcs_classes import import_tr_to_translationconfig, TranslationConfig, Tra
 from pdf2image import convert_from_path
 
 tessdata_dir_config = r'--tessdata-dir "/Users/nolanwelch/homebrew/Cellar/tesseract/5.2.0/share/tessdata"'
-text_ratio: float = 0.1  # Estimation of how much of a selection will be text; used to find non-background pixels
+text_ratio: float = 0.1  # Estimate of how much of a selection will be text; used to find non-background pixels
 
-def run(tr_file_name: str) -> None:
+def run(tr_cfg: TranslationConfig) -> None:
     temp_dir: str = tempfile.mkdtemp()
     temp_path: str = os.path.join(temp_dir, 'temp.jpg')
-    
-    tr_cfg: TranslationConfig = import_tr_to_translationconfig(tr_file_name)
 
     original_pdf_path: str = tr_cfg.originalFileName
     original_image_list: list = convert_from_path(original_pdf_path)
@@ -51,7 +49,10 @@ def run(tr_file_name: str) -> None:
                     color_list.append(Color(int(cropped_page_img[y,x][0]), int(cropped_page_img[y,x][1]), int(cropped_page_img[y,x][2])))
             color_list.sort(key=Counter(color_list).get, reverse=True)
             translation.backgroundColor = color_list[0]
-            translation.textColor = color_list[-int(img_height*img_width*text_ratio)]
+            color_ctr = Counter(color_list)
+            # TODO: Filter out values close to white.
+            translation.textColor = color_ctr.most_common(2)[1][0]
+            # translation.textColor = color_list[-int(img_height*img_width*text_ratio)]
     tr_cfg.save()
 
     

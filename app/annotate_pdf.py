@@ -55,7 +55,7 @@ def click_event(event, x, y, flags, params) -> None:
         cv2.imshow('PDF', current_img)
 
  
-def run() -> str:
+def run() -> TranslationConfig:
     global image_list
     global max_img_ind
     global current_img
@@ -82,4 +82,4 @@ def run() -> str:
     tr_config.save()
     shutil.rmtree(temp_dir)
     cv2.destroyAllWindows()
-    return f"{tr_config.originalFileName.split('.')[0]}.tr"
+    return tr_config
