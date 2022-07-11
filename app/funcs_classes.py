@@ -1,9 +1,6 @@
 import json
-import tkinter as tk
-from exceptions import DictConversionError, NoTranslationConfigError, ConfigInputError, ConfigOutputError
-from fpdf import FPDF
+from exceptions import ConfigOutputError, DictConversionError, NoTranslationConfigError
 from os.path import abspath, exists
-from tkinter import ttk
 
 
 class Point:
@@ -121,9 +118,6 @@ class TranslationConfig:
             return out_dict
         except Exception:
             DictConversionError("TranslationConfig")
-    
-    def save(self) -> None:
-        output_translationconfig_to_tr(f"{self.outputFileName.split('.')[0]}.tr", self)
 
 
 def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:
@@ -155,22 +149,3 @@ def output_translationconfig_to_tr(filepath: str, translation_config: Translatio
             json.dump(translation_dict, f, indent=4)
     except Exception:
         raise ConfigOutputError
-
-
-def main() -> None:
-    root = tk.Tk()
-    root.title("SimpleCAT")
-    root.geometry(f'1200x700+0+0')
-    root.resizable(False, False)
-    btn_open = ttk.Button(
-        root,
-        text='Open',
-        command=lambda: root.quit()
-    )
-    btn_open.pack()
-
-    root.mainloop()
-
-
-if __name__ == '__main__':
-    main()
