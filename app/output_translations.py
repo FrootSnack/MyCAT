@@ -1,11 +1,10 @@
-import tempfile
 import os
+import tempfile
+import textwrap
 from funcs_classes import Translation, TranslationConfig
-from pdf2image import convert_from_path
 from PIL import Image, ImageDraw, ImageFont
+from pdf2image import convert_from_path
 
-font_ratio: float = 240  # How much font size should be relatively in/deflated (higher number means a smaller font)
-arial_avg_char_width_px: float = 0.716
 
 def run(tr_cfg: TranslationConfig) -> None:
     temp_dir: str = tempfile.mkdtemp()
@@ -16,27 +15,35 @@ def run(tr_cfg: TranslationConfig) -> None:
     output_images_list: list = []
     starting_image = None
 
-    for page_ind, page in enumerate(tr_cfg.translations):
-        current_image = original_images_list[page_ind]
-        current_image.save(temp_path, 'JPEG')
+    for page_ind, page_image in enumerate(original_images_list):
+        page_image.save(temp_path, 'JPEG')
         current_image = Image.open(temp_path)
         draw = ImageDraw.Draw(current_image)
         
         tr: Translation
-        for tr in page:
+        for tr in tr_cfg.translations[page_ind]:
             # Blank out the selection with the given background color
             rect_corners: list = [(tr.xPos, tr.yPos), (tr.xPos+tr.width, tr.yPos+tr.height)]
             fill_color: tuple = tr.backgroundColor.to_tuple()
             draw.rectangle(xy=rect_corners, fill=fill_color)
             # Draw the translation string over the selection using the given text color
             # pixel_area: int = tr.width * tr.height
-            
-            # font_size: int = int((pixel_area/len(tr.translatedText)) / font_ratio)
-            
-            font = ImageFont.truetype('assets/arial.ttf', 55)
+            font_size: int = 60
+            font = None
+            while font_size >= 12:
+                font = ImageFont.truetype('assets/arial.ttf', font_size)
+                width_in_chars: int = int(tr.width/font.getsize('o')[0])
+                wrapper = textwrap.TextWrapper(width=width_in_chars)
+                wrapped_text = wrapper.wrap(text=tr.translatedText)
+                height_px: int = int(font.getsize(wrapped_text))
+                if height_px < tr.height:
+                    break
+                font_size -= 1
+
             text_loc: tuple = (tr.xPos, tr.yPos)
             text_color: tuple = tr.textColor.to_tuple()
-            print(text_color)
+            text_color = (0, 0, 0)
+            # print(text_color)
             draw.text(xy=text_loc, text=tr.translatedText, fill=text_color, font=font)
         if page_ind == 0:
             starting_image = current_image.convert('RGB') 

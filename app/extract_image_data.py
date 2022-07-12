@@ -48,6 +48,7 @@ def run(tr_cfg: TranslationConfig) -> None:
                 for y in range(img_height):
                     color_list.append(Color(int(cropped_page_img[y,x][0]), int(cropped_page_img[y,x][1]), int(cropped_page_img[y,x][2])))
             color_list.sort(key=Counter(color_list).get, reverse=True)
+            print([x.as_tuple() for x in color_list])
             translation.backgroundColor = color_list[0]
             color_ctr = Counter(color_list)
             # TODO: Filter out values close to white.
