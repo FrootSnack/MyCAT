@@ -4,10 +4,10 @@
     "translations": [
         [
             {
-                "xPos": 387,
-                "yPos": 348,
-                "width": 1260,
-                "height": 65,
+                "xPos": 402,
+                "yPos": 347,
+                "width": 1189,
+                "height": 64,
                 "textColor": {
                     "R": 38,
                     "G": 116,
@@ -20,78 +20,6 @@
                 },
                 "originalText": "Step Into Spring: Do THIS for 15 Minutes After Dinner",
                 "translatedText": "Step Into Spring: Do THIS for 15 Minutes After Dinner"
-            },
-            {
-                "xPos": 112,
-                "yPos": 529,
-                "width": 57,
-                "height": 169,
-                "textColor": {
-                    "R": 115,
-                    "G": 130,
-                    "B": 133
-                },
-                "backgroundColor": {
-                    "R": 187,
-                    "G": 215,
-                    "B": 229
-                },
-                "originalText": "Are Hai  You stre",
-                "translatedText": "Are you hangry?"
-            },
-            {
-                "xPos": 376,
-                "yPos": 1132,
-                "width": 584,
-                "height": 185,
-                "textColor": {
-                    "R": 79,
-                    "G": 154,
-                    "B": 53
-                },
-                "backgroundColor": {
-                    "R": 255,
-                    "G": 255,
-                    "B": 255
-                },
-                "originalText": "Did You Get the Message? Texting While Driving is Dangerous",
-                "translatedText": "Did You Get the Message? Texting While Driving is Dangerous"
-            },
-            {
-                "xPos": 1457,
-                "yPos": 833,
-                "width": 97,
-                "height": 37,
-                "textColor": {
-                    "R": 237,
-                    "G": 255,
-                    "B": 255
-                },
-                "backgroundColor": {
-                    "R": 29,
-                    "G": 116,
-                    "B": 169
-                },
-                "originalText": "MORE",
-                "translatedText": "MORE"
-            },
-            {
-                "xPos": 140,
-                "yPos": 1864,
-                "width": 160,
-                "height": 33,
-                "textColor": {
-                    "R": 238,
-                    "G": 255,
-                    "B": 255
-                },
-                "backgroundColor": {
-                    "R": 24,
-                    "G": 118,
-                    "B": 170
-                },
-                "originalText": "COMMENTS?",
-                "translatedText": "COMMENTS?"
             }
         ]
     ]

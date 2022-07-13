@@ -1,4 +1,4 @@
-from funcs_classes import import_tr_to_translationconfig, TranslationConfig, Translation
+from funcs_classes import TranslationConfig, Translation
 from os import system
 
 def run(tr_cfg: TranslationConfig) -> None:
