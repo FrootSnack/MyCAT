@@ -1,3 +1,4 @@
+from turtle import color
 import cv2
 import numpy as np
 import os
@@ -5,11 +6,11 @@ import pytesseract
 import re
 import tempfile
 from collections import Counter
-from funcs_classes import import_tr_to_translationconfig, TranslationConfig, Translation, Color
+from funcs_classes import TranslationConfig, Translation, Color
 from pdf2image import convert_from_path
 
 tessdata_dir_config = r'--tessdata-dir "/Users/nolanwelch/homebrew/Cellar/tesseract/5.2.0/share/tessdata"'
-text_ratio: float = 0.1  # Estimate of how much of a selection will be text; used to find non-background pixels
+
 
 def run(tr_cfg: TranslationConfig) -> None:
     temp_dir: str = tempfile.mkdtemp()
@@ -20,12 +21,11 @@ def run(tr_cfg: TranslationConfig) -> None:
     
     page: list
     for page_ind, page in enumerate(original_image_list):
-        if page_ind >= len(tr_cfg.translations):
+        if page_ind == len(tr_cfg.translations):
             break
 
         page.save(temp_path, 'JPEG')
         page_img = cv2.imread(temp_path)
-        
         
         cfg_page: list = tr_cfg.translations[page_ind]
 
@@ -48,12 +48,11 @@ def run(tr_cfg: TranslationConfig) -> None:
                 for y in range(img_height):
                     color_list.append(Color(int(cropped_page_img[y,x][0]), int(cropped_page_img[y,x][1]), int(cropped_page_img[y,x][2])))
             color_list.sort(key=Counter(color_list).get, reverse=True)
-            print([x.as_tuple() for x in color_list])
-            translation.backgroundColor = color_list[0]
-            color_ctr = Counter(color_list)
-            # TODO: Filter out values close to white.
-            translation.textColor = color_ctr.most_common(2)[1][0]
-            # translation.textColor = color_list[-int(img_height*img_width*text_ratio)]
+            color_list = list(dict.fromkeys(color_list))
+            bg_color: Color = color_list[0]
+            translation.backgroundColor = bg_color
+            color_list = [c for c in color_list if abs(c.R-bg_color.R) >= 30 and abs(c.G-bg_color.G) >= 30 and abs(c.B-bg_color.B) >= 30]
+            translation.textColor = color_list[0]
     tr_cfg.save()
 
     
