@@ -14,7 +14,8 @@ class Point:
             raise TypeError("All initialization values must be of the correct type.")
     
     def __eq__(self, __o: object) -> bool:
-        return self.x == __o.x and self.y == __o.y
+        return type(__o) == Point and self.x == __o.x and self.y == __o.y
+
 
     def to_dict(self) -> dict:
         return {'x': self.x, 'y': self.y}
@@ -110,17 +111,6 @@ class TranslationConfig:
             self.translations = []
         except AssertionError:
             raise TypeError("All initialization values must be of the correct type.")
-    
-    def add_translation(self, translation: Translation, page_ind: int) -> None:
-        try:
-            assert type(translation) is Translation
-            assert type(page_ind) is int
-            if page_ind > (len(self.translations)-1):
-                self.translations.append([translation])
-            else:
-                self.translations[page_ind].append(translation)
-        except AssertionError:
-            raise AssertionError("All passed values must be of the correct type.")
 
     def to_dict(self) -> dict:
         try:

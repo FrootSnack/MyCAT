@@ -50,7 +50,8 @@ def run(tr_cfg: TranslationConfig) -> None:
             bg_color: Color = color_list[0]
             translation.backgroundColor = bg_color
             color_list = [c for c in color_list if abs(c.R-bg_color.R) >= 30 and abs(c.G-bg_color.G) >= 30 and abs(c.B-bg_color.B) >= 30]
-            translation.textColor = color_list[0]
-    tr_cfg.save()
+            translation.textColor = color_list[0] if len(color_list) != 0 else Color(0, 0, 0)
+            # Save to file after each data extraction
+            tr_cfg.save()
 
     

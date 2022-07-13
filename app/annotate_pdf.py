@@ -42,9 +42,10 @@ def click_event(event, x, y, flags, params) -> None:
         cv2.imshow('PDF', img_copy)
     
     elif event == cv2.EVENT_LBUTTONUP:
-        tr_config.add_translation(Translation(start_point.x, start_point.y, x-start_point.x, y-start_point.y), img_ind)
-        current_img = img_copy
         mouse_pressed = False
+        if x > start_point.x and y > start_point.y:
+            tr_config.translations[img_ind].append(Translation(start_point.x, start_point.y, x-start_point.x, y-start_point.y))
+            current_img = img_copy
     
     # Middle click progresses the PDF to the next page
     elif event == cv2.EVENT_MBUTTONDOWN:
@@ -67,11 +68,11 @@ def run() -> TranslationConfig:
          or pdf_file_name.split('.')[1].lower() != 'pdf':
         pdf_file_name = fd.askopenfilename()
     
-    tr_config = TranslationConfig(pdf_file_name, f"{pdf_file_name.split('.')[0]}_out.pdf")
-    
     image_list = convert_from_path(pdf_file_name)
-    
-    max_img_ind = len(image_list) - 1
+    max_img_ind = len(image_list)-1
+
+    tr_config = TranslationConfig(pdf_file_name, f"{pdf_file_name.split('.')[0]}_out.pdf")
+    tr_config.translations = [[] for x in range(len(image_list))]
     
     image_list[0].save(temp_path, 'JPEG')
     current_img = cv2.imread(temp_path)

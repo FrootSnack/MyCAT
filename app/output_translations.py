@@ -5,6 +5,8 @@ from funcs_classes import Translation, TranslationConfig
 from PIL import Image, ImageDraw, ImageFont
 from pdf2image import convert_from_path
 
+max_font_size: int = 60
+min_font_size: int = 24
 
 def run(tr_cfg: TranslationConfig) -> None:
     temp_dir: str = tempfile.mkdtemp()
@@ -30,10 +32,10 @@ def run(tr_cfg: TranslationConfig) -> None:
             fill_color: tuple = tr.backgroundColor.to_tuple()
             draw.rectangle(xy=rect_corners, fill=fill_color)
             # Draw the translation string over the selection using the given text color
-            font_size: int = 60
+            font_size: int = max_font_size
             font = None
             wrapped_text: str = ''
-            while font_size >= 12:
+            while font_size >= min_font_size:
                 font = ImageFont.truetype('assets/arial.ttf', font_size)
                 width_in_chars: int = int(tr.width/font.getsize('o')[0])
                 wrapper = textwrap.TextWrapper(width=width_in_chars)
