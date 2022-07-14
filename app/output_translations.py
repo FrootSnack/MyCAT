@@ -5,7 +5,7 @@ from pdf2image import convert_from_path
 from tempfile import mkdtemp
 from textwrap import TextWrapper
 
-max_font_size: int = 60
+max_font_size: int = 120
 min_font_size: int = 16
 
 def run(tr_cfg: TranslationConfig) -> None:
