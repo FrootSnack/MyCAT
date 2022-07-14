@@ -6,11 +6,10 @@ from PIL import Image, ImageDraw, ImageFont
 from pdf2image import convert_from_path
 
 max_font_size: int = 60
-min_font_size: int = 24
+min_font_size: int = 16
 
 def run(tr_cfg: TranslationConfig) -> None:
-    temp_dir: str = tempfile.mkdtemp()
-    temp_path: str = os.path.join(temp_dir, 'temp.jpg')
+    temp_path: str = os.path.join(tempfile.mkdtemp(), 'temp.jpg')
     
     original_images_list: list = convert_from_path(tr_cfg.originalFileName)
     output_pdf_path = tr_cfg.outputFileName
@@ -18,9 +17,7 @@ def run(tr_cfg: TranslationConfig) -> None:
     starting_image = None
 
     for page_ind, page_image in enumerate(original_images_list):
-        if page_ind == len(tr_cfg.translations):
-            break
-
+        # Save pdf image to a temporary directory and create a canvas on top of it
         page_image.save(temp_path, 'JPEG')
         current_image = Image.open(temp_path)
         draw = ImageDraw.Draw(current_image)
@@ -35,14 +32,19 @@ def run(tr_cfg: TranslationConfig) -> None:
             font_size: int = max_font_size
             font = None
             wrapped_text: str = ''
+            # Start at max_font_size and work down to min_font_size to find the right size
             while font_size >= min_font_size:
                 font = ImageFont.truetype('assets/arial.ttf', font_size)
+                # Find the approximate width in characters of the selected area at size font_size
                 width_in_chars: int = int(tr.width/font.getsize('o')[0])
+                # Split the text across lines at the given character using textwrap
                 wrapper = textwrap.TextWrapper(width=width_in_chars)
                 wrapped_text = wrapper.wrap(text=tr.translatedText)
+                # Approximate the height of the text generated with textwrap
                 line_count: int = len(wrapped_text)
                 wrapped_text = ('\n').join(wrapped_text)
                 text_height_px: int = int(font.getsize(wrapped_text)[1])*line_count
+                # If the text fits within the vertical range of the selection, font size is correct
                 if text_height_px < tr.height:
                     break
                 font_size -= 1

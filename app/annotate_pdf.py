@@ -42,10 +42,11 @@ def click_event(event, x, y, flags, params) -> None:
         cv2.imshow('PDF', img_copy)
     
     elif event == cv2.EVENT_LBUTTONUP:
-        mouse_pressed = False
         if x > start_point.x and y > start_point.y:
             tr_config.translations[img_ind].append(Translation(start_point.x, start_point.y, x-start_point.x, y-start_point.y))
             current_img = img_copy
+        mouse_pressed = False
+        cv2.imshow('PDF', current_img)
     
     # Middle click progresses the PDF to the next page
     elif event == cv2.EVENT_MBUTTONDOWN:

@@ -11,8 +11,7 @@ tessdata_dir_config = r'--tessdata-dir "/Users/nolanwelch/homebrew/Cellar/tesser
 
 
 def run(tr_cfg: TranslationConfig) -> None:
-    temp_dir: str = tempfile.mkdtemp()
-    temp_path: str = os.path.join(temp_dir, 'temp.jpg')
+    temp_path: str = os.path.join(tempfile.mkdtemp(), 'temp.jpg')
 
     original_pdf_path: str = tr_cfg.originalFileName
     original_image_list: list = convert_from_path(original_pdf_path)
@@ -44,13 +43,17 @@ def run(tr_cfg: TranslationConfig) -> None:
             color_list: list = []
             for x in range(img_width):
                 for y in range(img_height):
-                    color_list.append(Color(int(cropped_page_img[y,x][0]), int(cropped_page_img[y,x][1]), int(cropped_page_img[y,x][2])))
+                    color_list.append(Color(int(cropped_page_img[y,x][0]), int(cropped_page_img[y,x][1]),\
+                         int(cropped_page_img[y,x][2])))
+            # Sort color_list by number of occurrences and get unique values
             color_list.sort(key=Counter(color_list).get, reverse=True)
             color_list = list(dict.fromkeys(color_list))
             bg_color: Color = color_list[0]
             translation.backgroundColor = bg_color
-            color_list = [c for c in color_list if abs(c.R-bg_color.R) >= 30 and abs(c.G-bg_color.G) >= 30 and abs(c.B-bg_color.B) >= 30]
-            translation.textColor = color_list[0] if len(color_list) != 0 else Color(0, 0, 0)
+            # Remove any colors where any component is within 30 of that of the background color
+            color_list = [c for c in color_list if abs(c.R-bg_color.R) >= 30 and abs(c.G-bg_color.G) >= 30\
+                 and abs(c.B-bg_color.B) >= 30]
+            translation.textColor = color_list[0] if len(color_list) != 0 else Color(0, 0, 0)  # Default textColor is black
             # Save to file after each data extraction
             tr_cfg.save()
 
