@@ -1,15 +1,15 @@
-import os
-import tempfile
-import textwrap
 from funcs_classes import Translation, TranslationConfig
+from os import path
 from PIL import Image, ImageDraw, ImageFont
 from pdf2image import convert_from_path
+from tempfile import mkdtemp
+from textwrap import TextWrapper
 
 max_font_size: int = 60
 min_font_size: int = 16
 
 def run(tr_cfg: TranslationConfig) -> None:
-    temp_path: str = os.path.join(tempfile.mkdtemp(), 'temp.jpg')
+    temp_path: str = path.join(mkdtemp(), 'temp.jpg')
     
     original_images_list: list = convert_from_path(tr_cfg.originalFileName)
     output_pdf_path = tr_cfg.outputFileName
@@ -38,7 +38,7 @@ def run(tr_cfg: TranslationConfig) -> None:
                 # Find the approximate width in characters of the selected area at size font_size
                 width_in_chars: int = int(tr.width/font.getsize('o')[0])
                 # Split the text across lines at the given character using textwrap
-                wrapper = textwrap.TextWrapper(width=width_in_chars)
+                wrapper = TextWrapper(width=width_in_chars)
                 wrapped_text = wrapper.wrap(text=tr.translatedText)
                 # Approximate the height of the text generated with textwrap
                 line_count: int = len(wrapped_text)

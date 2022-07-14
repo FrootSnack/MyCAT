@@ -1,17 +1,17 @@
-import cv2
-import os
-import pytesseract
-import re
-import tempfile
 from collections import Counter
+from cv2 import imread, cvtColor, COLOR_BGR2RGB
 from funcs_classes import TranslationConfig, Translation, Color
+from os import path
 from pdf2image import convert_from_path
+from pytesseract import image_to_string
+from re import sub
+from tempfile import mkdtemp
 
 tessdata_dir_config = r'--tessdata-dir "/Users/nolanwelch/homebrew/Cellar/tesseract/5.2.0/share/tessdata"'
 
 
 def run(tr_cfg: TranslationConfig) -> None:
-    temp_path: str = os.path.join(tempfile.mkdtemp(), 'temp.jpg')
+    temp_path: str = path.join(mkdtemp(), 'temp.jpg')
 
     original_pdf_path: str = tr_cfg.originalFileName
     original_image_list: list = convert_from_path(original_pdf_path)
@@ -22,7 +22,7 @@ def run(tr_cfg: TranslationConfig) -> None:
             break
 
         page.save(temp_path, 'JPEG')
-        page_img = cv2.imread(temp_path)
+        page_img = imread(temp_path)
         
         cfg_page: list = tr_cfg.translations[page_ind]
 
@@ -32,11 +32,11 @@ def run(tr_cfg: TranslationConfig) -> None:
             end_x: int = translation.xPos + translation.width
             end_y: int = translation.yPos + translation.height
             cropped_page_img = page_img[translation.yPos:end_y, translation.xPos:end_x]
-            cropped_page_img = cv2.cvtColor(cropped_page_img, cv2.COLOR_BGR2RGB)
+            cropped_page_img = cvtColor(cropped_page_img, COLOR_BGR2RGB)
             # Using pytesseract to extract the text from the cropped region and adding it to the Translation
-            original_text: str = pytesseract.image_to_string(cropped_page_img, config=tessdata_dir_config)
-            original_text = re.sub('\n', ' ', original_text)
-            original_text = re.sub('\u2019', '\'', original_text)
+            original_text: str = image_to_string(cropped_page_img, config=tessdata_dir_config)
+            original_text = sub('\n', ' ', original_text)
+            original_text = sub('\u2019', '\'', original_text)
             translation.originalText = original_text.strip()
             # Finds the most- and second-most common colors to be the background and foreground colors respectively
             img_height, img_width, _ = cropped_page_img.shape

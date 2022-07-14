@@ -1,10 +1,9 @@
-import tkinter as tk
 from funcs_classes import TranslationConfig, Translation
-from tkinter import simpledialog
+from tkinter import simpledialog, Tk
 
 
 def run(tr_cfg: TranslationConfig) -> None:
-    root = tk.Tk()
+    root = Tk()
     root.withdraw()
 
     page: list
