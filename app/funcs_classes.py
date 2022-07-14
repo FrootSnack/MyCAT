@@ -33,10 +33,6 @@ class Color:
             self.G = G
             assert type(B) is int
             self.B = B
-            if R == G == B:
-                self.R = 255
-                self.G = 255
-                self.B = 255
         except AssertionError:
             raise TypeError("All initialization values must be of the correct type.")
     
