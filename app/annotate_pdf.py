@@ -65,9 +65,10 @@ def run() -> TranslationConfig:
     global pdf_file_name
     global tr_config
 
-    pdf_file_name = ''
-    while pdf_file_name == '' or not path.exists(pdf_file_name)\
-         or pdf_file_name.split('.')[1].lower() != 'pdf':
+    pdf_file_name = fd.askopenfilename()
+    if pdf_file_name == '':
+        exit()
+    elif not path.exists(pdf_file_name) or pdf_file_name.split('.')[1].lower() != 'pdf':
         pdf_file_name = fd.askopenfilename()
     
     image_list = convert_from_path(pdf_file_name)
