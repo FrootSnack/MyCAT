@@ -65,11 +65,11 @@ def run() -> TranslationConfig:
     global pdf_file_name
     global tr_config
 
-    pdf_file_name = fd.askopenfilename()
-    if pdf_file_name == '':
-        exit()
-    elif not path.exists(pdf_file_name) or pdf_file_name.split('.')[1].lower() != 'pdf':
-        pdf_file_name = fd.askopenfilename()
+    pdf_file_name = ''
+    while not path.exists(pdf_file_name):
+        pdf_file_name = fd.askopenfilename(title='Select PDF', filetypes=[['PDF', '.pdf']])
+        if pdf_file_name == '':  # Empty string is passed when user presses "cancel"
+            exit()
     
     image_list = convert_from_path(pdf_file_name)
     max_img_ind = len(image_list)-1
