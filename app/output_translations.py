@@ -1,3 +1,4 @@
+from turtle import width
 from funcs_classes import Translation, TranslationConfig
 from os import path
 from PIL import Image, ImageDraw, ImageFont
@@ -37,6 +38,8 @@ def run(tr_cfg: TranslationConfig) -> None:
                 font = ImageFont.truetype('assets/arial.ttf', font_size)
                 # Find the approximate width in characters of the selected area at size font_size
                 width_in_chars: int = int(tr.width/font.getsize('o')[0])
+                if width_in_chars == 0:
+                    break
                 # Split the text across lines at the given character using textwrap
                 wrapper = TextWrapper(width=width_in_chars)
                 wrapped_text = wrapper.wrap(text=tr.translatedText)

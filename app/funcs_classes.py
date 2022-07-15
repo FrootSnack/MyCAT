@@ -134,12 +134,14 @@ def import_tr_to_translationconfig(filepath: str) -> TranslationConfig:
         with open(filepath, 'r') as f:
             tr_dict: dict = json.load(f)
         out_config: TranslationConfig = TranslationConfig(tr_dict['originalFileName'], tr_dict['outputFileName'])
-        for page_ind, page in enumerate(tr_dict['translations']):
+        for page in tr_dict['translations']:
+            page_list: list = []
             for tr in page:
-                out_config.add_translation(Translation(tr['xPos'], tr['yPos'], tr['width'], tr['height'],\
+                page_list.append(Translation(tr['xPos'], tr['yPos'], tr['width'], tr['height'],\
                     Color(tr['textColor']['R'], tr['textColor']['G'], tr['textColor']['B']),\
                     Color(tr['backgroundColor']['R'], tr['backgroundColor']['G'], tr['backgroundColor']['B']),\
-                        tr['originalText'], tr['translatedText']), page_ind)
+                        tr['originalText'], tr['translatedText']))
+            out_config.translations.append(page_list)
         return out_config
     except Exception:
         raise ConfigInputError
