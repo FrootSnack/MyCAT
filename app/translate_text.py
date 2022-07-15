@@ -11,5 +11,5 @@ def run(tr_cfg: TranslationConfig) -> None:
     for page in tr_cfg.translations:
         for tr in page:
             user_translation: str = simpledialog.askstring(title='Translation', prompt=tr.originalText)
-            tr.translatedText = user_translation
+            tr.translatedText = '' if user_translation is None else user_translation
     tr_cfg.save()
