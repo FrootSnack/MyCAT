@@ -6,6 +6,8 @@ from pdf2image import convert_from_path
 from tempfile import mkdtemp
 from textwrap import TextWrapper
 
+# TODO: Change the output to use FPDF instead of PIL; text-based instead of image-based (improve portability and reduce file size)
+
 max_font_size: int = 120
 min_font_size: int = 16
 
