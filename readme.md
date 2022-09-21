@@ -6,4 +6,6 @@ MyCAT was successfully used to reduce the time taken to translate employee welln
 
 ## Example
 The image below is a page taken from a translated newsletter. Translations were completed by this project's author.
-![Example program output](assets/mycat_output_example.jpg)
+<p align="center">
+<img src=assets/mycat_output_example.jpg width="500">
+</p>
